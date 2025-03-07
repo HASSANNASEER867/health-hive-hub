@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Dumbbell, Heart, ChevronRight, User, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface TabProps {
   children: React.ReactNode;
@@ -96,6 +97,7 @@ function NavHeader({ className }: NavHeaderProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           className="flex items-center space-x-4">
+          <ThemeToggle className="mr-2" />
           <button className="py-2 px-4 rounded-full hidden md:flex items-center text-sm font-medium text-fitness-500 border border-fitness-500/20 hover:bg-fitness-500/10 transition-all duration-300">
             Sign in
           </button>
