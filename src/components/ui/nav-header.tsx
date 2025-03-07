@@ -2,6 +2,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Dumbbell, Heart, ChevronRight, User, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 interface TabProps {
@@ -12,9 +13,10 @@ interface TabProps {
     opacity: number;
   }>>;
   icon?: React.ReactNode;
+  to: string;
 }
 
-const Tab: React.FC<TabProps> = ({ children, setPosition, icon }) => {
+const Tab: React.FC<TabProps> = ({ children, setPosition, icon, to }) => {
   const ref = useRef<HTMLLIElement>(null);
   return (
     <li
@@ -31,8 +33,10 @@ const Tab: React.FC<TabProps> = ({ children, setPosition, icon }) => {
       }}
       className="relative z-10 flex items-center cursor-pointer px-3 py-1.5 text-xs uppercase text-white mix-blend-difference md:px-5 md:py-3 md:text-base"
     >
-      {icon && <span className="mr-2">{icon}</span>}
-      {children}
+      <Link to={to} className="flex items-center">
+        {icon && <span className="mr-2">{icon}</span>}
+        {children}
+      </Link>
     </li>
   );
 };
@@ -69,18 +73,20 @@ function NavHeader({ className }: NavHeaderProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
           className="flex items-center">
-          <Dumbbell className="h-8 w-8 mr-2 text-fitness-500" />
-          <span className="text-xl font-geist font-bold">FitPrime</span>
+          <Link to="/" className="flex items-center">
+            <Dumbbell className="h-8 w-8 mr-2 text-fitness-500" />
+            <span className="text-xl font-geist font-bold">FitPrime</span>
+          </Link>
         </motion.div>
         
         <ul
           className="relative mx-auto hidden md:flex w-fit rounded-full border border-white/10 dark:border-white/5 bg-black/10 dark:bg-white/5 backdrop-blur-md p-1"
           onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
         >
-          <Tab setPosition={setPosition} icon={<Dumbbell className="w-4 h-4" />}>Workouts</Tab>
-          <Tab setPosition={setPosition} icon={<Heart className="w-4 h-4" />}>Nutrition</Tab>
-          <Tab setPosition={setPosition} icon={<Calendar className="w-4 h-4" />}>Plans</Tab>
-          <Tab setPosition={setPosition} icon={<User className="w-4 h-4" />}>Coaches</Tab>
+          <Tab setPosition={setPosition} to="/workouts" icon={<Dumbbell className="w-4 h-4" />}>Workouts</Tab>
+          <Tab setPosition={setPosition} to="/nutrition" icon={<Heart className="w-4 h-4" />}>Nutrition</Tab>
+          <Tab setPosition={setPosition} to="/plans" icon={<Calendar className="w-4 h-4" />}>Plans</Tab>
+          <Tab setPosition={setPosition} to="/coaches" icon={<User className="w-4 h-4" />}>Coaches</Tab>
 
           <Cursor position={position} />
         </ul>
